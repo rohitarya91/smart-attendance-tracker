@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Attendance & Performance Tracker</title>
+    <meta name="description" content="AI-Assisted Student Attendance and Performance Tracking System">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <span>EduTrack AI</span>
+            </div>
+            <nav class="nav-menu">
+                <button class="nav-item active" data-tab="dashboard">
+                    <i class="fa-solid fa-chart-pie"></i> Dashboard
+                </button>
+                <button class="nav-item" data-tab="students">
+                    <i class="fa-solid fa-users"></i> Students
+                </button>
+                <button class="nav-item" data-tab="attendance">
+                    <i class="fa-solid fa-calendar-check"></i> Attendance
+                </button>
+                <button class="nav-item" data-tab="performance">
+                    <i class="fa-solid fa-chart-line"></i> Performance
+                </button>
+            </nav>
+            <div class="user-profile">
+                <div class="avatar">A</div>
+                <div class="info">
+                    <span class="name">Admin User</span>
+                    <span class="role">Faculty</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="top-bar">
+                <h1 id="page-title">Dashboard</h1>
+                <div class="actions">
+                    <button class="btn-icon"><i class="fa-regular fa-bell"></i></button>
+                    <button class="btn-primary" id="add-student-btn"><i class="fa-solid fa-plus"></i> Add Student</button>
+                </div>
+            </header>
+
+            <!-- Dynamic Content Container -->
+            <div id="content-area" class="content-area">
+                <!-- Dashboard View (Default) -->
+                <div class="view active" id="view-dashboard">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="icon-box blue"><i class="fa-solid fa-user-graduate"></i></div>
+                            <div class="stat-info">
+                                <h3>Total Students</h3>
+                                <p id="total-students">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="icon-box green"><i class="fa-solid fa-check-double"></i></div>
+                            <div class="stat-info">
+                                <h3>Avg Attendance</h3>
+                                <p id="avg-attendance">0%</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="icon-box purple"><i class="fa-solid fa-star"></i></div>
+                            <div class="stat-info">
+                                <h3>Avg Performance</h3>
+                                <p id="avg-performance">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="icon-box red"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                            <div class="stat-info">
+                                <h3>At Risk</h3>
+                                <p id="students-at-risk">0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="recent-activity">
+                        <h2>Recent Activity</h2>
+                        <ul id="activity-log" class="activity-list">
+                            <!-- JS will populate this -->
+                            <li class="empty-state">No recent activity</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Students View -->
+                <div class="view" id="view-students">
+                    <div class="card">
+                        <div class="table-header">
+                            <h2>Student List</h2>
+                            <div class="search-box">
+                                <i class="fa-solid fa-search"></i>
+                                <input type="text" id="search-student" placeholder="Search students...">
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Roll No</th>
+                                        <th>Name</th>
+                                        <th>Semester</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="student-table-body">
+                                    <!-- JS will populate -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Attendance View -->
+                <div class="view" id="view-attendance">
+                     <div class="split-layout">
+                        <section class="card">
+                            <h2>Mark Attendance</h2>
+                            <form id="attendance-form">
+                                <div class="form-group">
+                                    <label>Select Student</label>
+                                    <select id="attendance-student-select" required>
+                                        <option value="">-- Select Student --</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Status</label>
+                                    <div class="radio-group">
+                                        <label class="radio-option">
+                                            <input type="radio" name="status" value="Present" checked>
+                                            <span class="radio-label">Present</span>
+                                        </label>
+                                        <label class="radio-option">
+                                            <input type="radio" name="status" value="Absent">
+                                            <span class="radio-label">Absent</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn-primary full-width">Mark Attendance</button>
+                            </form>
+                        </section>
+
+                        <section class="card">
+                            <h2>Attendance Overview</h2>
+                            <div class="chart-placeholder">
+                                <p>Select a student to view detailed attendance logs.</p>
+                            </div>
+                        </section>
+                     </div>
+                </div>
+
+                <!-- Performance View -->
+                <div class="view" id="view-performance">
+                    <div class="split-layout">
+                        <section class="card">
+                            <h2>Enter Marks</h2>
+                            <form id="marks-form">
+                                <div class="form-group">
+                                    <label>Select Student</label>
+                                    <select id="marks-student-select" required>
+                                        <option value="">-- Select Student --</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Subject</label>
+                                    <input type="text" id="subject-input" placeholder="e.g. Mathematics" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Marks (0-100)</label>
+                                    <input type="number" id="marks-input" min="0" max="100" required>
+                                </div>
+                                <button type="submit" class="btn-primary full-width">Save Marks</button>
+                            </form>
+                        </section>
+                        
+                        <section class="card">
+                            <h2>Performance Analysis</h2>
+                            <div id="ai-analysis-result" class="ai-insight-box hidden">
+                                <div class="ai-header">
+                                    <i class="fa-solid fa-robot"></i> AI Analysis
+                                </div>
+                                <div class="ai-content">
+                                    <h3 id="analysis-student-name">Student Name</h3>
+                                    <div class="analysis-stats">
+                                        <span id="analysis-score">Score: 0</span>
+                                        <span id="analysis-grade" class="badge">Grade</span>
+                                    </div>
+                                    <p id="analysis-remark">AI generated remark will appear here.</p>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal for Adding Student -->
+    <div id="modal-add-student" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Student</h2>
+                <button class="close-modal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="add-student-form">
+                <div class="form-group">
+                    <label>Roll Number</label>
+                    <input type="text" id="roll-no" placeholder="e.g. 101" required>
+                    <small class="validation-msg" id="roll-no-msg"></small>
+                </div>
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="student-name" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label>Semester</label>
+                    <input type="number" id="semester" min="1" max="8" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary close-modal">Cancel</button>
+                    <button type="submit" class="btn-primary">Add Student</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
